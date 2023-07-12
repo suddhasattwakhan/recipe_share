@@ -18,7 +18,18 @@ def recipe_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'recipe_list.html', {'recipes': recipes})
 
-@login_required
+def recipe_edit(request, recipe_id):
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            form.save()
+            return redirect(recipe)
+    else:
+        form = RecipeForm(instance=recipe)
+    return render(request, 'recipe_edit.html', {'form': form, 'recipe': recipe})
+
+
 @login_required
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)

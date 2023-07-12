@@ -18,6 +18,13 @@
       <p>{{ recipe.ingredients }}</p>
       <h4>Instructions</h4>
       <p>{{ recipe.instructions }}</p>
+      {% if user.is_authenticated and user == recipe.created_by %}
+      <a
+        href="{% url 'recipe_edit' recipe_id=recipe.id %}"
+        class="btn btn-primary"
+        >Update Recipe</a
+      >
+      {% endif %}
     </div>
   </div>
   <hr />

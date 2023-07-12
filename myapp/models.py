@@ -2,6 +2,7 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -22,6 +23,8 @@ class Recipe(models.Model):
     instructions = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='media', null=True, blank=True)
+    def get_absolute_url(self):
+        return reverse('recipe_detail', kwargs={'recipe_id': self.id})
 
     def __str__(self):
         return self.title
