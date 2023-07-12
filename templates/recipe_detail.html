@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h1 class="my-4">{{ recipe.title }}</h1>
+  <div class="row">
+    <div class="col-lg-6">
+      {% if recipe.image %}
+      <img
+        src="{{ recipe.image.url }}"
+        class="img-fluid rounded mb-4"
+        alt="Recipe Image"
+      />
+    </div>
+    {% endif %}
+    <div class="col-lg-6">
+      <h4>Description</h4>
+      <p>{{ recipe.description }}</p>
+      <h4>Ingredients</h4>
+      <p>{{ recipe.ingredients }}</p>
+      <h4>Instructions</h4>
+      <p>{{ recipe.instructions }}</p>
+    </div>
+  </div>
+  <hr />
+  <h3>Reviews</h3>
+  {% if reviews %}
+  <div class="row">
+    {% for review in reviews %}
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ review.user.username }}</h5>
+          <p class="card-text">Rating: {{ review.rating }}</p>
+          <p class="card-text">{{ review.comment }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>No reviews yet.</p>
+  {% endif %}
+  <hr />
+  <h3>Leave a Review</h3>
+  <form method="post" action="{% url 'recipe_detail' recipe_id=recipe.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_rating">Rating</label>
+      <select id="id_rating" name="rating" class="form-control">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="id_comment">Comment</label>
+      <textarea id="id_comment" name="comment" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+  </form>
+</div>
+{% endblock %}

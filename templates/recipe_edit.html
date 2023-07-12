@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Edit Recipe</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- Pre-fill the form with existing recipe details and allow editing -->
+  <!-- Include form fields for recipe title, description, ingredients, instructions, image upload, etc. -->
+  <input type="submit" value="Update Recipe" />
+</form>
+{% endblock %}
